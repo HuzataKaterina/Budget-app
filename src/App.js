@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import Layout from "./components/Layout";
+import HomePage from "./components/HomePage";
+import SettingsPage from "./components/SettingsPage";
+import HistoryPage from "./components/HistoryPage";
+import styled from "styled-components";
+
+const Container = styled.main`
+  width: 810px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  // grid-template-rows: repeat(5, 1fr);
+  padding: 0 1%;
+`;
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Container>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<HomePage />} />
+            <Route path="history" element={<HistoryPage />} />
+            <Route path="settings" element={<SettingsPage />} />
+          </Route>
+        </Routes>
+      </Container>
     </div>
   );
 }
