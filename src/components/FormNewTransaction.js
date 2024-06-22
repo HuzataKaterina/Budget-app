@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.section``;
@@ -104,7 +104,20 @@ const FormNewTransaction = () => {
       name: "long-term goals",
     },
   ];
+  const [options, setOptions] = useState(expensesCategory);
 
+  useEffect(() => {
+    switch (group) {
+      case "Expenses":
+        setOptions(expensesCategory);
+        break;
+      case "Incomes":
+        setOptions(incomesCategory);
+        break;
+      case "Savings":
+        setOptions(savingsCategory);
+    }
+  }, [group]);
   return (
     <Container>
       <Form>
@@ -118,43 +131,11 @@ const FormNewTransaction = () => {
         </Div>
         <Div>
           <Label>Choose Category</Label>
-          {group === "Expenses" && (
-            <Select>
-              <Option value={expensesCategory[0].id}>
-                {expensesCategory[0].name}
-              </Option>
-              <Option value={expensesCategory[1].id}>
-                {expensesCategory[1].name}
-              </Option>
-              <Option value={expensesCategory[2].id}>
-                {expensesCategory[2].name}
-              </Option>
-              expensesCategory
-            </Select>
-          )}
-          {group === "Incomes" && (
-            <Select>
-              <Option value={incomesCategory[0].id}>
-                {incomesCategory[0].name}
-              </Option>
-              <Option value={incomesCategory[1].id}>
-                {incomesCategory[1].name}
-              </Option>
-              <Option value={incomesCategory[2].id}>
-                {incomesCategory[2].name}
-              </Option>
-            </Select>
-          )}
-          {group === "Savings" && (
-            <Select>
-              <Option value={savingsCategory[0].id}>
-                {savingsCategory[0].name}
-              </Option>
-              <Option value={savingsCategory[1].id}>
-                {savingsCategory[1].name}
-              </Option>
-            </Select>
-          )}
+          <Select>
+            {options.map((option) => (
+              <Option value={option.id}>{option.name}</Option>
+            ))}
+          </Select>
         </Div>
         <Div>
           <Label>Set the sum</Label>
