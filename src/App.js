@@ -5,6 +5,7 @@ import HomePage from "./components/HomePage";
 import SettingsPage from "./components/SettingsPage";
 import HistoryPage from "./components/HistoryPage";
 import styled from "styled-components";
+import { useState } from "react";
 
 const Container = styled.main`
   width: 810px;
@@ -16,6 +17,7 @@ const Container = styled.main`
 `;
 
 function App() {
+  
   return (
     <div className="App">
       <Container>
@@ -28,6 +30,7 @@ function App() {
         </Routes>
       </Container>
     </div>
+
   );
 }
 

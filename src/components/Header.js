@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Settings from "./Settings";
 import Novigation from "./novigation/Novigation";
 import { IoIosAddCircle } from "react-icons/io";
 import { IoMdSettings } from "react-icons/io";
+import  Modal from "../components/Modal";
 
 const Conteiner = styled.header`
   grid-column: 1/6;
@@ -35,6 +36,8 @@ const Link = styled.a`
   }
 `;
 const Header = () => {
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
   return (
     <>
       <Conteiner>
@@ -43,13 +46,15 @@ const Header = () => {
             <IoMdSettings size={40} color="#4e87eb" />
           </Link>
         </ContainerSettings>
-        {/* <Settings/> */}
 
         <Novigation />
         <ConteinerAdd>
-          <IoIosAddCircle size={40} color="#4e87eb" />
+          <button onClick={() => setIsFormOpen(true)}>
+            <IoIosAddCircle size={40} color="#4e87eb" />
+          </button>
         </ConteinerAdd>
       </Conteiner>
+      {isFormOpen && <Modal></Modal>}
     </>
   );
 };

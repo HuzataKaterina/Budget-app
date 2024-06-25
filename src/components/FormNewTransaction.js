@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
-const Container = styled.section``;
+const Container = styled.section`
+width: 60%;
+margin: auto;
+`;
 const Form = styled.form`
   width: 90%;
   display: flex;

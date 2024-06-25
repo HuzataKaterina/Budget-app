@@ -20,17 +20,18 @@ const Select = styled.select`
   border: none;
   background-color: #fff;
 `;
-const Option = styled.option``;
+const Option = styled.option`
+`;
 const Label = styled.label`
   font-size: 1em;
 `;
 const Button = styled.button`
-  margin-top: 5%;
-  padding: 1%;
-  border-radius: 15px;
-  border: none;
-  background-color: #4e87eb;
-  color: #fff;
+margin-top: 5%;
+padding: 1%;
+border-radius: 15px;
+border: none;
+background-color: #4e87eb;
+color: #fff;
 `;
 const Div = styled.div`
   display: flex;
@@ -47,13 +48,6 @@ const SettingsPage = () => {
           <Select>
             <Option>English</Option>
             <Option>Ukranian</Option>
-          </Select>
-        </Div>
-        <Div>
-          <Label>Currency</Label>
-          <Select>
-            <Option>USD</Option>
-            <Option>UHR</Option>
           </Select>
         </Div>
         <Div>

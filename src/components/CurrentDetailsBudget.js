@@ -75,7 +75,7 @@ const CurrentDetailsBudget = () => {
           </Button>
         </ContainerButtons>
 
-        {/* {buttonClicked !== "converter" && (
+        {buttonClicked !== "converter" && (
           <ContainerGrapf>
             <CurrentGrapf />
             <CurrentGrapf />
@@ -88,8 +88,8 @@ const CurrentDetailsBudget = () => {
           <Container>
             <Converter />
           </Container>
-        )} */}
-        <FormNewTransaction/>
+        )}
+        {/* <FormNewTransaction/> */}
       </>
     </Wrapper>
   );
