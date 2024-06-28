@@ -1,9 +1,9 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import Layout from "./components/Layout";
-import HomePage from "./components/HomePage";
-import SettingsPage from "./components/SettingsPage";
-import HistoryPage from "./components/HistoryPage";
+import Layout from "./app/Layout";
+import HomePage from "../src/pages/HomePage";
+import SettingsPage from "../src/pages/SettingsPage";
+import HistoryPage from "../src/pages/HistoryPage";
 import styled from "styled-components";
 import { useState } from "react";
 
