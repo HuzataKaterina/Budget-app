@@ -5,7 +5,7 @@ import { TbPigMoney } from "react-icons/tb";
 import { RiSafeFill } from "react-icons/ri";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { FaArrowLeftLong } from "react-icons/fa6";
-// import useStore from "../stores/storeBudget";
+import useStore from "../app/storeBudget";
 
 const Wrapper = styled.section`
   grid-column: 1/6;
@@ -46,6 +46,10 @@ const Div = styled.div`
 `;
 const DivIcon = styled.div`
   width: 7%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 `;
 const DivDel = styled(Div)`
   width: auto;
@@ -65,201 +69,40 @@ const H4 = styled.h4`
   padding: 0 1%;
 `;
 const ListOfTransactions = () => {
+  const transactions = useStore((state) => state.transactions);
+  console.log(transactions);
   return (
     <Wrapper>
       <H4>Transactions</H4>
+      {transactions.length == 0 && <div>transactions doesn't exist</div>}
       <Ul>
-        <Li>
-          <DivIcon>
-            <TbPigMoney />
-          </DivIcon>
-          <Span>25.06.24</Span>
-          <Div>
-            <Span>Food&Drink</Span>
-            <Span>Silpo</Span>
-          </Div>
-          <Span>11200.00</Span>
-          <DivDel>
-            <Button>
-              <TiDelete />
-            </Button>
-          </DivDel>
-        </Li>
-        <Li>
-          <DivIcon>
-            <FaArrowRightLong color="#4e87eb" />
-          </DivIcon>
-          <Span>25.06.24</Span>
-          <Div>
-            <Span>Transport</Span>
-            <Span>Comment</Span>
-          </Div>
-          <Span>200.00</Span>
-          <DivDel>
-            <Button>
-              <TiDelete />
-            </Button>
-          </DivDel>
-        </Li>
-        <Li>
-          <DivIcon>
-            <FaArrowLeftLong />
-          </DivIcon>
-          <Span>25.06.24</Span>
-          <Div>
-            <Span>Category</Span>
-            <Span>Comment</Span>
-          </Div>
-          <Span>200.00</Span>
-          <DivDel>
-            <Button>
-              <TiDelete />
-            </Button>
-          </DivDel>
-        </Li>
+        {transactions.map((transaction) => (
+          <Li>
+            <DivIcon>
+              {transaction.group === "Expenses" && (
+                <FaArrowLeftLong color="#ef6d6d" />
+              )}
+              {transaction.group === "Incomes" && (
+                <FaArrowRightLong color="#4e87eb" />
+              )}
+              {transaction.group === "Savings" && (
+                <TbPigMoney color="#00bfbd" />
+              )}
+            </DivIcon>
+            <Span>{transaction.date}</Span>
+            <Div>
+              <Span>{transaction.category}</Span>
+              <Span>{transaction.comment}</Span>
+            </Div>
+            <Span>{transaction.sum}</Span>
+            <DivDel>
+              <Button>
+                <TiDelete color="grey"/>
+              </Button>
+            </DivDel>
+          </Li>
+        ))}
       </Ul>
-
-      {/* <Table>
-        <Caption>Transactions</Caption>
-        <Tbody>
-          <Tr>
-            <Td>
-              <TbPigMoney size={20} color="#00bfbd" />
-            </Td>
-            <Td>25.06.24</Td>
-            <Td>
-              <Span>Savings</Span>
-            </Td>
-            <Td>
-              <Span>Comment</Span>
-            </Td>
-            <Td>
-              <Span>100</Span>
-            </Td>
-            <Td>
-              <TiDelete color="grey" />
-            </Td>
-          </Tr>
-          <Tr>
-            <Td>
-              <RiSafeFill size={20} />
-            </Td>
-            <Td>25.06.24</Td>
-            <Td>
-              <Span>Savings</Span>
-            </Td>
-            <Td>
-              <Span>Comment Comment CommentComment Comment</Span>
-            </Td>
-            <Td>
-              <Span>100</Span>
-            </Td>
-            <Td>
-              <TiDelete />
-            </Td>
-          </Tr>
-          <Tr>
-            <Td>
-              <FaArrowRightLong size={20} color="#4e87eb" />
-            </Td>
-            <Td>25.06.24</Td>
-            <Td>
-              <Span>Incomes</Span>
-            </Td>
-            <Td>
-              <Span>Comment Comment Comment Comment</Span>
-            </Td>
-            <Td>
-              <Span>2000</Span>
-            </Td>
-            <Td>
-              <TiDelete />
-            </Td>
-          </Tr>
-          <Tr>
-            <Td>
-              <FaArrowLeftLong size={20} color="#ef6d6d" />
-            </Td>
-            <Td>25.06.24</Td>
-            <Td>
-              <Span>Expenses</Span>
-            </Td>
-            <Td>
-              <Span>Comment</Span>
-            </Td>
-            <Td>
-              <Span>100</Span>
-            </Td>
-            <Td>
-              <TiDelete />
-            </Td>
-          </Tr>
-          <Tr>
-            <Td>Icon</Td>
-            <Td>25.06.24</Td>
-            <Td>
-              <Span>Category</Span>
-            </Td>
-            <Td>
-              <Span>Comment</Span>
-            </Td>
-            <Td>
-              <Span>100</Span>
-            </Td>
-            <Td>
-              <TiDelete />
-            </Td>
-          </Tr>
-          <Tr>
-            <Td>Icon</Td>
-            <Td>25.06.24</Td>
-            <Td>
-              <Span>Category</Span>
-            </Td>
-            <Td>
-              <Span>Comment</Span>
-            </Td>
-            <Td>
-              <Span>100</Span>
-            </Td>
-            <Td>
-              <TiDelete />
-            </Td>
-          </Tr>
-          <Tr>
-            <Td>Icon</Td>
-            <Td>25.06.2024</Td>
-            <Td>
-              <Span>Category</Span>
-            </Td>
-            <Td>
-              <Span>Comment</Span>
-            </Td>
-            <Td>
-              <Span>100</Span>
-            </Td>
-            <Td>
-              <TiDelete />
-            </Td>
-          </Tr>
-          <Tr>
-            <Td>Icon</Td>
-            <Td>25.06.2024</Td>
-            <Td>
-              <Span>Category</Span>
-            </Td>
-            <Td>
-              <Span>Comment</Span>
-            </Td>
-            <Td>
-              <Span>100</Span>
-            </Td>
-            <Td>
-              <TiDelete />
-            </Td>
-          </Tr>
-        </Tbody>
-      </Table> */}
     </Wrapper>
   );
 };

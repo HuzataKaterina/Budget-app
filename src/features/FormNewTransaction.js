@@ -69,59 +69,20 @@ const Button = styled.button`
   }
 `;
 const FormNewTransaction = ({ setIsFormOpen }) => {
-  const [group, setGroup] = useState("Expenses");
-  // const { addTransaction } = useStore();
-
-  const expensesCategory = [
-    {
-      id: 1,
-      name: "Food&Drinks",
-    },
-    {
-      id: 2,
-      name: "Transport",
-    },
-    {
-      id: 3,
-      name: "Entertainmant",
-    },
-    {
-      id: 4,
-      name: "Health",
-    },
-    {
-      id: 5,
-      name: "Shopping",
-    },
-  ];
-  const incomesCategory = [
-    {
-      id: 6,
-      name: "Salary",
-    },
-    {
-      id: 7,
-      name: "Royalty",
-    },
-    {
-      id: 8,
-      name: "Rental",
-    },
-  ];
-  const savingsCategory = [
-    {
-      id: 9,
-      name: "short-term goals",
-    },
-    {
-      id: 10,
-      name: "long-term goals",
-    },
-  ];
+  const { addTransaction, expensesCategory, incomesCategory, savingsCategory } =
+    useStore();
+  const [newTransaction, setNewTransaction] = useState({
+    group: "Expenses",
+    category: "",
+    categoryId: "",
+    sum: "",
+    comment: "",
+    date: new Date().toLocaleDateString(),
+  });
   const [options, setOptions] = useState(expensesCategory);
 
   useEffect(() => {
-    switch (group) {
+    switch (newTransaction.group) {
       case "Expenses":
         setOptions(expensesCategory);
         break;
@@ -131,36 +92,97 @@ const FormNewTransaction = ({ setIsFormOpen }) => {
       case "Savings":
         setOptions(savingsCategory);
     }
-  }, [group]);
+  }, [newTransaction.group]);
+
+  const clear = () => {
+    setNewTransaction({
+      group: "Expenses",
+      category: "",
+      categoryId: "",
+      sum: "",
+      comment: "",
+      date: new Date().toLocaleDateString(),
+    });
+    setIsFormOpen(false);
+  };
+  const handleClick = (e) => {
+    e.preventDefault();
+    addTransaction(newTransaction);
+    clear();
+  };
+
   return (
     <Container>
-      <Form>
+      <Form action="#">
         <Div>
           <Label>Choose group</Label>
-          <Select value={group} onChange={(e) => setGroup(e.target.value)}>
+          <Select
+            value={newTransaction.group}
+            onChange={(e) => {
+              setNewTransaction((transaction) => ({
+                ...transaction,
+                group: e.target.value,
+              }));
+            }}
+            name="group"
+          >
             <Option value="Expenses">Expenses</Option>
             <Option value="Incomes">Incomes</Option>
             <Option value="Savings">Savings</Option>
           </Select>
         </Div>
         <Div>
-          <Label>Choose Category</Label>
-          <Select>
+          <Label>Choose category</Label>
+          <Select
+            value={newTransaction.category}
+            id={newTransaction.categoryId}
+            onChange={(e) => {
+              setNewTransaction((transaction) => ({
+                ...transaction,
+                category: e.target.value,
+                categoryId: e.target.id,
+              }));
+            }}
+            name="category"
+          >
+            <Option>Select...</Option>
             {options.map((option) => (
-              <Option value={option.id}>{option.name}</Option>
+              <Option value={option.name} id={option.id}>
+                {option.name}
+              </Option>
             ))}
           </Select>
         </Div>
         <Div>
           <Label>Set the sum</Label>
-          <InputNumber type="number" />
+          <InputNumber
+            value={newTransaction.sum}
+            type="number"
+            onChange={(e) =>
+              setNewTransaction((transaction) => ({
+                ...transaction,
+                sum: e.target.value,
+              }))
+            }
+          />
         </Div>
         <Div>
           <Label>Your comment</Label>
-          <InputArea type="text" />
+          <InputArea
+            value={newTransaction.comment}
+            type="text"
+            onChange={(e) =>
+              setNewTransaction((transaction) => ({
+                ...transaction,
+                comment: e.target.value,
+              }))
+            }
+          />
         </Div>
         <DivButtons>
-          <Button >Add</Button>
+          <Button type="submit" onClick={handleClick}>
+            Add
+          </Button>
           <Button onClick={() => setIsFormOpen(false)}>CLose</Button>
         </DivButtons>
       </Form>

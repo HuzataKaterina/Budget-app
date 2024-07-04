@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Converter from "../features/Converter";
 import CurrentGrapf from "../entities/CurrentGrapf";
-import FormNewTransaction from "../features/FormNewTransaction";
+import useStore from "../app/storeBudget";
 
 const Wrapper = styled.section`
   grid-column: 3/6;
