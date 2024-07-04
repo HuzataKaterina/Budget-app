@@ -89,7 +89,6 @@ const CurrentBudgetDetails = () => {
             <Converter />
           </Container>
         )}
-        {/* <FormNewTransaction/> */}
       </>
     </Wrapper>
   );

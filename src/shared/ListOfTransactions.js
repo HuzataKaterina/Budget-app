@@ -77,7 +77,7 @@ const ListOfTransactions = () => {
       {transactions.length == 0 && <div>transactions doesn't exist</div>}
       <Ul>
         {transactions.map((transaction) => (
-          <Li>
+          <Li key={transaction.id}>
             <DivIcon>
               {transaction.group === "Expenses" && (
                 <FaArrowLeftLong color="#ef6d6d" />

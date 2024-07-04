@@ -1,4 +1,5 @@
 import React from "react";
+import propTypes from "prop-types";
 import { IoIosAddCircle } from "react-icons/io";
 import styled from "styled-components";
 
@@ -26,5 +27,7 @@ const AddButton = ({ setIsFormOpen }) => {
     </ConteinerAdd>
   );
 };
-
+AddButton.propTypes = {
+  setIsFormOpen: propTypes.func.isRequired,
+};
 export default AddButton;

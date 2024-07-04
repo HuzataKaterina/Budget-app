@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import propTypes from 'prop-types'
 import useStore from "../app/storeBudget";
 import styled from "styled-components";
 
@@ -113,7 +114,7 @@ const FormNewTransaction = ({ setIsFormOpen }) => {
 
   return (
     <Container>
-      <Form action="#">
+      <Form action="#" method="post">
         <Div>
           <Label>Choose group</Label>
           <Select
@@ -189,5 +190,7 @@ const FormNewTransaction = ({ setIsFormOpen }) => {
     </Container>
   );
 };
-
+FormNewTransaction.propTypes = {
+  setIsFormOpen: propTypes.func.isRequired,
+}
 export default FormNewTransaction;
