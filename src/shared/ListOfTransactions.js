@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { TiDelete } from "react-icons/ti";
 import { TbPigMoney } from "react-icons/tb";
-import { RiSafeFill } from "react-icons/ri";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import useStore from "../app/storeBudget";
@@ -69,15 +68,16 @@ const H4 = styled.h4`
   padding: 0 1%;
 `;
 const ListOfTransactions = () => {
-  const transactions = useStore((state) => state.transactions);
+  const { transactions, deleteTransaction } = useStore();
+
   console.log(transactions);
   return (
     <Wrapper>
       <H4>Transactions</H4>
-      {transactions.length == 0 && <div>transactions doesn't exist</div>}
+      {transactions.length == 0 && <div>Transactions don't exist</div>}
       <Ul>
         {transactions.map((transaction) => (
-          <Li key={transaction.id}>
+          <Li key={transaction.id} id={transaction.id}>
             <DivIcon>
               {transaction.group === "Expenses" && (
                 <FaArrowLeftLong color="#ef6d6d" />
@@ -96,8 +96,8 @@ const ListOfTransactions = () => {
             </Div>
             <Span>{transaction.sum}</Span>
             <DivDel>
-              <Button>
-                <TiDelete color="grey"/>
+              <Button onClick={()=> deleteTransaction(transaction.id)}>
+                <TiDelete color="grey" />
               </Button>
             </DivDel>
           </Li>
