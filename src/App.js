@@ -1,11 +1,13 @@
 import "./App.css";
+import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./app/Layout";
+import  useStore  from "./app/storeBudget";
+import { createIndexedDb, getFromIndexedDb, getData } from "./app/indexedDB";
 import HomePage from "../src/pages/HomePage";
 import SettingsPage from "../src/pages/SettingsPage";
 import HistoryPage from "../src/pages/HistoryPage";
 import styled from "styled-components";
-import { useState } from "react";
 
 const Container = styled.main`
   width: 810px;
@@ -17,7 +19,20 @@ const Container = styled.main`
 `;
 
 function App() {
-  
+  const { setTransactions, transactions } = useStore();
+
+  createIndexedDb();
+
+  useEffect(() => {
+    getData().then((result) => {
+      setTransactions(result)
+      console.log(result)
+    }).catch((err) => {
+      console.error(err)
+    });
+   
+  }, []);
+
   return (
     <div className="App">
       <Container>
@@ -30,7 +45,6 @@ function App() {
         </Routes>
       </Container>
     </div>
-
   );
 }
 

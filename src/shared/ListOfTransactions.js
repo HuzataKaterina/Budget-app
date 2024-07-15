@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { TiDelete } from "react-icons/ti";
 import { TbPigMoney } from "react-icons/tb";
@@ -69,14 +69,17 @@ const H4 = styled.h4`
 `;
 const ListOfTransactions = () => {
   const { transactions, deleteTransaction } = useStore();
+  // const [filteredTransactions, setTransactions] = useState()
+const filteredTransactions = transactions
+  
 
   console.log(transactions);
   return (
     <Wrapper>
       <H4>Transactions</H4>
-      {transactions.length == 0 && <div>Transactions don't exist</div>}
+      {filteredTransactions.length === 0 && <div>Transactions don't exist</div>}
       <Ul>
-        {transactions.map((transaction) => (
+        {filteredTransactions.map((transaction) => (
           <Li key={transaction.id} id={transaction.id}>
             <DivIcon>
               {transaction.group === "Expenses" && (
@@ -96,7 +99,7 @@ const ListOfTransactions = () => {
             </Div>
             <Span>{transaction.sum}</Span>
             <DivDel>
-              <Button onClick={()=> deleteTransaction(transaction.id)}>
+              <Button onClick={() => deleteTransaction(transaction.id)}>
                 <TiDelete color="grey" />
               </Button>
             </DivDel>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import propTypes from 'prop-types'
+import propTypes from "prop-types";
 import useStore from "../app/storeBudget";
 import styled from "styled-components";
 
@@ -111,6 +111,17 @@ const FormNewTransaction = ({ setIsFormOpen }) => {
     addTransaction(newTransaction);
     clear();
   };
+  const setCategory = (e) => {
+    options.map((option) => {
+      if (option.id === +e.target.value) {
+        setNewTransaction({
+          ...newTransaction,
+          category: option.name,
+          categoryId: +e.target.value,
+        });
+      }
+    });
+  };
 
   return (
     <Container>
@@ -135,22 +146,14 @@ const FormNewTransaction = ({ setIsFormOpen }) => {
         <Div>
           <Label>Choose category</Label>
           <Select
-            value={newTransaction.category}
+            value={newTransaction.categoryId}
             id={newTransaction.categoryId}
-            onChange={(e) => {
-              setNewTransaction((transaction) => ({
-                ...transaction,
-                category: e.target.value,
-                categoryId: e.target.id,
-              }));
-            }}
+            onChange={setCategory}
             name="category"
           >
             <Option>Select...</Option>
             {options.map((option) => (
-              <Option value={option.name} id={option.id}>
-                {option.name}
-              </Option>
+              <Option value={option.id}>{option.name}</Option>
             ))}
           </Select>
         </Div>
@@ -162,7 +165,7 @@ const FormNewTransaction = ({ setIsFormOpen }) => {
             onChange={(e) =>
               setNewTransaction((transaction) => ({
                 ...transaction,
-                sum: e.target.value,
+                sum: +e.target.value,
               }))
             }
           />
@@ -192,5 +195,5 @@ const FormNewTransaction = ({ setIsFormOpen }) => {
 };
 FormNewTransaction.propTypes = {
   setIsFormOpen: propTypes.func.isRequired,
-}
+};
 export default FormNewTransaction;

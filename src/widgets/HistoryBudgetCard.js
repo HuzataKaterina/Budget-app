@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { PieChart } from "reaviz";
 import {PieArcSeries} from 'reaviz'
+import useStore from "../app/storeBudget";
 
 const Container = styled.section``;
 const Title = styled.span`

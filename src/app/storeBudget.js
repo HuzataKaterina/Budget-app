@@ -1,18 +1,30 @@
 import { create } from "zustand";
+import { persist, createJSONStorage, StateStorage } from "zustand/middleware";
 import { nanoid } from "nanoid";
+import { saveToIndexedDb, deleteFromDb } from "./indexedDB";
 
-const useStore = create((set) => ({
-  transactions: [],
-  addTransaction: (transaction) =>
-    set((state) => ({
-      transactions: [...state.transactions, { ...transaction, id: nanoid() }],
-    })),
-  deleteTransaction: (id) =>
-    set((state) => ({
-      transactions: state.transactions.filter((transaction) => {
-        return transaction.id !== id;
-      }),
-    })),
+const useStore = create(
+  // persist(
+  (set, get) => ({
+    transactions: [],
+    addTransaction: (transaction) => {
+      const newTransaction = { ...transaction, id: nanoid() };
+      saveToIndexedDb(newTransaction);
+      set((state) => ({
+        transactions: [...state.transactions, newTransaction],
+      }));
+    },
+    setTransactions: (transactions) =>
+      set(() => ({ transactions: transactions })),
+    deleteTransaction: (id) => {
+      deleteFromDb(id)
+        set((state) => ({
+        transactions: state.transactions.filter((transaction) => {
+          return transaction.id !== id;
+        }),
+      }))
+    },
+    
     expensesCategory: [
       {
         id: 1,
@@ -59,6 +71,11 @@ const useStore = create((set) => ({
         name: "Long-term goals",
       },
     ],
+  })
+  // {
+  //   name: "dbBudget",
 
-}));
+  // }
+);
+// );
 export default useStore;
