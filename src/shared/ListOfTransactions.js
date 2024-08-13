@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { TiDelete } from "react-icons/ti";
 import { TbPigMoney } from "react-icons/tb";
@@ -67,13 +67,9 @@ const H4 = styled.h4`
   text-align: left;
   padding: 0 1%;
 `;
-const ListOfTransactions = () => {
-  const { transactions, deleteTransaction } = useStore();
-  // const [filteredTransactions, setTransactions] = useState()
+const ListOfTransactions = ({ transactions }) => {
+  const { deleteTransaction } = useStore();
 const filteredTransactions = transactions
-  
-
-  console.log(transactions);
   return (
     <Wrapper>
       <H4>Transactions</H4>

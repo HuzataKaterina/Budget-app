@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { HiHome } from "react-icons/hi2";
 
 const Link = styled.a`
+
   &:active,
   &:visited {
     text-decoration: none;

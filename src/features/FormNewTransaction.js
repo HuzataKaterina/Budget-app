@@ -78,7 +78,7 @@ const FormNewTransaction = ({ setIsFormOpen }) => {
     categoryId: "",
     sum: "",
     comment: "",
-    date: new Date().toLocaleDateString(),
+    date: new Date().toISOString().slice(0, 10),
   });
   const [options, setOptions] = useState(expensesCategory);
 

@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import useStore from "../app/storeBudget";
 
 const Container = styled.section`
   grid-column: 1/3;
   // grid-row: 2/3;
-  // width: 90%;
+  width: 85%;
   // height: 90%;
   display: flex;
   flex-direction: column;
@@ -34,11 +35,19 @@ const SpanFullBudget = styled.span`
   margin-bottom: 2%;
 `;
 const CurrentBudgetCard = () => {
+  const { budgetMonth } = useStore()
+  
+  const options = {
+    day: 'numeric',
+    year: 'numeric',
+    month: 'long',
+  }
+  const date = new Date().toLocaleDateString("en-CA", options)
   return (
     <Container>
-      <Title>January 2024</Title>
-      <Span>$ 1582 left</Span>
-      <SpanFullBudget>out of 2,000 budgeted</SpanFullBudget>
+      <Title>{date}</Title>
+      <Span>$ {budgetMonth.currentBudget} left</Span>
+      <SpanFullBudget>out of {budgetMonth.incomes} budgeted</SpanFullBudget>
     </Container>
   );
 };

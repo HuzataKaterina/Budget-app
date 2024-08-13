@@ -2,7 +2,7 @@ import "./App.css";
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./app/Layout";
-import  useStore  from "./app/storeBudget";
+import useStore from "./app/storeBudget";
 import { createIndexedDb, getFromIndexedDb, getData } from "./app/indexedDB";
 import HomePage from "../src/pages/HomePage";
 import SettingsPage from "../src/pages/SettingsPage";
@@ -19,18 +19,19 @@ const Container = styled.main`
 `;
 
 function App() {
-  const { setTransactions, transactions } = useStore();
+  const { setTransactions } = useStore();
 
   createIndexedDb();
 
   useEffect(() => {
-    getData().then((result) => {
-      setTransactions(result)
-      console.log(result)
-    }).catch((err) => {
-      console.error(err)
-    });
-   
+    getData()
+      .then((result) => {
+        setTransactions(result);
+        console.log(result);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }, []);
 
   return (

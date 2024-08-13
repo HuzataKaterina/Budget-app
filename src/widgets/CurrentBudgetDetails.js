@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Converter from "../features/Converter";
 import CurrentGrapf from "../entities/CurrentGrapf";
@@ -52,6 +52,10 @@ const Button = styled.button`
   padding: 2%;
   border-radius: 20px;
   justify-items: stretch;
+  &.selected {
+    background-color: #fff;
+    box-shadow: 0 0 10px #8583832b;
+  }
   &:hover {
     cursor: pointer;
     background-color: #fff;
@@ -61,30 +65,81 @@ const Button = styled.button`
 `;
 
 const CurrentBudgetDetails = () => {
-  const [buttonClicked, setButtonClicked] = useState("expenses");
+  const [converterClicked, setConverterClicked] = useState(false);
+  const {
+    monthTransactionsByCategories,
+    setSelectedGroup,
+    selectedGroup,
+    setFilteredTransactions,
+    transactions,
+  } = useStore();
 
+  useEffect(() => {
+    setFilteredTransactions(selectedGroup);
+  }, [selectedGroup]);
+
+  console.log(selectedGroup);
   return (
     <Wrapper>
       <>
         <ContainerButtons>
-          <Button onClick={() => setButtonClicked("Expenses")}>Expenses</Button>
-          <Button onClick={() => setButtonClicked("Incomes")}>Incomes</Button>
-          <Button onClick={() => setButtonClicked("Incomes")}>Savings</Button>
-          <Button onClick={() => setButtonClicked("converter")}>
+          <Button
+            className={`${
+              selectedGroup === "Expenses" && !converterClicked
+                ? "selected"
+                : ""
+            }`}
+            onClick={() => {
+              setSelectedGroup("Expenses");
+              setConverterClicked(false);
+            }}
+          >
+            Expenses
+          </Button>
+          <Button
+            className={`${
+              selectedGroup === "Incomes" && !converterClicked
+                ? "selected"
+                : ""
+            }`}
+            onClick={() => {
+              setSelectedGroup("Incomes");
+              setConverterClicked(false);
+            }}
+          >
+            Incomes
+          </Button>
+          <Button
+            className={`${
+              selectedGroup === "Savings" && !converterClicked
+                ? "selected"
+                : ""
+            }`}
+            onClick={() => {
+              setSelectedGroup("Savings");
+              setConverterClicked(false);
+            }}
+          >
+            Savings
+          </Button>
+          <Button
+            className={`${
+              converterClicked && converterClicked === false ? "selected" : ""
+            }`}
+            onClick={() => {
+              setConverterClicked(true);
+            }}
+          >
             Converter
           </Button>
         </ContainerButtons>
 
-        {buttonClicked !== "converter" && (
+        {!converterClicked && (
           <ContainerGrapf>
-            <CurrentGrapf />
-            <CurrentGrapf />
-            <CurrentGrapf />
-            <CurrentGrapf />
             <CurrentGrapf />
           </ContainerGrapf>
         )}
-        {buttonClicked == "converter" && (
+        {converterClicked && (
           <Container>
             <Converter />
           </Container>

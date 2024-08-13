@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import CircularSlider from "@fseehawer/react-circular-slider";
+import useStore from "../app/storeBudget";
 
 const Container = styled.div`
   width: 55%;
@@ -26,25 +27,73 @@ const SpanLeft = styled(Span)`
   font-size: 0.75em;
 `;
 const CurrentGrapf = () => {
+  const {
+    monthTransactionsByCategories,
+    budgetMonth,
+    selectedGroup,
+    expensesCategory,
+    incomesCategory,
+    savingsCategory,
+    setFilteredTransactions,
+  } = useStore();
+
+  const [categories, setCategiries] = useState([]);
+
+  useEffect(() => {
+    switch (selectedGroup) {
+      case "Expenses":
+        setCategiries(expensesCategory);
+        break;
+      case "Incomes":
+        setCategiries(incomesCategory);
+        break;
+      case "Savings":
+        setCategiries(savingsCategory);
+        break;
+    }
+  }, [selectedGroup]);
+
+  console.log(monthTransactionsByCategories);
+  const transactionsCategory = monthTransactionsByCategories.reduce(
+    (acc, transaction, index) => {
+      const obj = categories.find((category) => {
+        if (category.id === transaction.id) {
+          acc[index] = { ...transaction, name: category.name };
+        }
+      });
+      return acc;
+    },
+    []
+  );
+
+  console.log(transactionsCategory);
+
   return (
-    <Container>
-      <Title>Food&Drinks</Title>
-      <CircularSlider
-        width={150}
-        progressColorFrom="#00bfbd"
-        min={0}
-        max={100}
-        dataIndex={40}
-        hideKnob={true}
-        knobDraggable={false}
-        labelFontSize={25}
-        valueFontSize={0}
-        label={`${40}%`}
-      />
-      <SpanLeft>
-        $500 lefl<Span>{" out of $900"}</Span>
-      </SpanLeft>
-    </Container>
+    <>
+      {transactionsCategory.map((category) => (
+        <Container>
+          <Title>{category.name}</Title>
+          <CircularSlider
+            width={150}
+            progressColorFrom="#00bfbd"
+            min={0}
+            max={budgetMonth[selectedGroup.toLowerCase()]}
+            dataIndex={category.sum}
+            hideKnob={true}
+            knobDraggable={false}
+            labelFontSize={25}
+            valueFontSize={0}
+            label={`${Math.round(
+              (category.sum * 100) / budgetMonth[selectedGroup.toLowerCase()]
+            )}%`}
+          />
+          <SpanLeft>
+            {category.sum}
+            <Span>{` out of ${budgetMonth[selectedGroup.toLowerCase()]}`}</Span>
+          </SpanLeft>
+        </Container>
+      ))}
+    </>
   );
 };
 
